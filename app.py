@@ -35,6 +35,7 @@ from utils.validation import (
 
 ROOT = Path(__file__).resolve().parent
 DATASET_PATH = ROOT / "dataset" / "ai4i2020.csv"
+WEB_ICON_PATH = ROOT / "public" / "webIcon.png"
 MODE_OPTIONS = ["Manual Input", "CSV / Simulation"]
 DATA_SOURCE_OPTIONS = ["Upload CSV", "Generate Simulation"]
 PLOTLY_CONFIG = {"displayModeBar": False, "responsive": True}
@@ -49,7 +50,7 @@ FEATURE_TOOLTIPS = {
 
 st.set_page_config(
     page_title="Industrial Machine Failure Prediction",
-    page_icon="",
+    page_icon=WEB_ICON_PATH,
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -732,7 +733,7 @@ def main() -> None:
         """
         <div class="app-footer">
             <div>Early Industrial Machine Failure Prediction System using ANFIS and Genetic Algorithm</div>
-            <div class="app-footer-brand">© Soft Computing 2026</div>
+            <div class="app-footer-brand">&copy; Soft Computing 2026</div>
         </div>
         """,
         unsafe_allow_html=True,

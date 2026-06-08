@@ -24,6 +24,7 @@ The application loads the trained artifacts from the `models/` directory, applie
 - Fuzzy membership explanation
 - Batch prediction table
 - Simulation results
+- Browser tab icon from `public/webIcon.png`
 
 ## Project Structure
 
@@ -40,6 +41,8 @@ PREDICTIVE-MAINTENANCE/
 |   `-- scaler.pkl
 |-- notebook/
 |   `-- 230011_230057_230079_Kode_Program_UAS_Softcom....ipynb
+|-- public/
+|   `-- webIcon.png
 |-- utils/
 |   |-- __init__.py
 |   |-- inference.py
