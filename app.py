@@ -651,7 +651,7 @@ def render_explanation_area() -> None:
     if not details:
         return
 
-    with st.expander("Why did this result appear?", expanded=False):
+    with st.expander("Why did this result appear?", expanded=True):
         selected_detail = None
 
         if st.session_state.result_mode == "manual":
