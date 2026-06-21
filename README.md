@@ -1,85 +1,98 @@
 # Industrial Machine Failure Prediction
 
-Early industrial machine failure prediction system using an ANFIS model optimized with a Genetic Algorithm. The application is built with Streamlit and is intended for inference, prediction visualization, simulation, and user-friendly explanation of machine failure risk.
+Early industrial machine failure prediction system using an Adaptive Neuro-Fuzzy Inference System (ANFIS) model optimized with a Genetic Algorithm (GA). The application is built with the Streamlit framework and is designed for inference, prediction visualization, data simulation, and interactive, user-friendly explanation of machine failure risks.
 
-The app does not retrain the model and does not modify the original dataset, notebook, scaler, or model artifacts.
+This application is non-invasive, meaning it does not retrain the model and does not modify the original dataset, Jupyter notebook, scaler object, or model parameter files.
 
 ## Project Overview
 
-This project predicts whether an industrial machine is in a normal operating condition or at failure risk based on five operating parameters:
+This project predicts whether an industrial machine is in a normal operating condition or at failure risk based on five main operating parameters:
 
-- `Air temperature [K]`
-- `Process temperature [K]`
-- `Rotational speed [rpm]`
-- `Torque [Nm]`
-- `Tool wear [min]`
+1. **Air temperature [K]**: Ambient air temperature around the machine, measured in Kelvin (dataset range: 295.3 K to 304.5 K).
+2. **Process temperature [K]**: Process-side operating temperature, measured in Kelvin (dataset range: 305.7 K to 313.8 K).
+3. **Rotational speed [rpm]**: Shaft or spindle rotational speed, measured in revolutions per minute (dataset range: 1168.0 rpm to 2886.0 rpm).
+4. **Torque [Nm]**: Mechanical torque load applied to the machine, measured in Newton-meters (dataset range: 3.8 Nm to 76.6 Nm).
+5. **Tool wear [min]**: Estimated accumulated tool wear time, measured in minutes (dataset range: 0.0 min to 253.0 min).
 
-The application loads the trained artifacts from the `models/` directory, applies the same preprocessing and inference flow used in the notebook, and displays:
+The application loads the trained model artifacts from the `models/` directory, applies the exact same preprocessing and inference flow used in the experimental notebook, and displays:
 
-- Risk score
-- Model threshold
-- Prediction status
-- Decision margin
-- Recommended action
+- Risk score of failure (risk score)
+- Model decision threshold (threshold)
+- Prediction status (Normal or Failure Risk)
+- Decision margin (decision margin)
+- Recommended maintenance action
 - Fuzzy membership explanation
-- Batch prediction table
-- Simulation results
-- Browser tab icon from `public/webIcon.png`
+- Feature contribution analysis
+- Batch prediction table for multiple records
+- Graphical representation of batch statistics and distribution
 
 ## Project Structure
 
-```text
-PREDICTIVE-MAINTENANCE/
-|-- app.py
-|-- requirements.txt
-|-- dataset/
-|   `-- ai4i2020.csv
-|-- models/
-|   |-- anfis_with_ga_params.pkl
-|   |-- anfis_without_ga_params.pkl
-|   |-- feature_columns.pkl
-|   `-- scaler.pkl
-|-- notebook/
-|   `-- 230011_230057_230079_Kode_Program_UAS_Softcom....ipynb
-|-- public/
-|   `-- webIcon.png
-|-- utils/
-|   |-- __init__.py
-|   |-- inference.py
-|   |-- explanation.py
-|   |-- data_generator.py
-|   |-- validation.py
-|   `-- ui_style.py
-`-- README.md
-```
+The structure of folders and files in this project is as follows:
 
-## Installation Guide
+* **app.py**: Main Streamlit application script.
+* **requirements.txt**: List of required Python library dependencies.
+* **README.md**: This documentation file.
+* **dataset/**
+  * **ai4i2020.csv**: Reference dataset for statistics and simulation.
+* **models/**
+  * **anfis_with_ga_params.pkl**: ANFIS model parameters optimized with Genetic Algorithm.
+  * **anfis_without_ga_params.pkl**: ANFIS model parameters without Genetic Algorithm optimization.
+  * **feature_columns.pkl**: List of feature names used by the model.
+  * **scaler.pkl**: Scaler object for feature normalization before inference.
+* **notebook/**
+  * **230011_230057_230079_Kode_Program_UAS_Softcom....ipynb**: Initial research Jupyter notebook.
+* **public/**
+  * **webIcon.png**: Browser tab icon for the web application.
+  * **manual_input.png**: User guide screenshot: Manual Input panel.
+  * **record_detail.png**: User guide screenshot: Row inputs and fuzzy membership table.
+  * **explanation_detail.png**: User guide screenshot: Decision Narrative panel.
+  * **fuzzy_membership.png**: User guide screenshot: Fuzzy Membership Degree chart.
+  * **feature_contribution.png**: User guide screenshot: Feature Contribution chart.
+  * **csv_input_handle-1.png**: User guide screenshot: Drop rows with missing values option.
+  * **csv_input_handle-2.png**: User guide screenshot: Fill missing values with median option.
+  * **csv_results.png**: User guide screenshot: CSV batch prediction results.
+* **utils/**
+  * **__init__.py**: Module initialization.
+  * **inference.py**: ANFIS inference logic, risk scoring, and model loading.
+  * **explanation.py**: Prediction narrative generator and feature contribution table.
+  * **data_generator.py**: Simulation data generator based on dataset statistics.
+  * **validation.py**: Input verification and missing value handling.
+  * **ui_style.py**: Custom stylesheet and UI design configuration.
 
-### 1. Clone or open the project
+## Installation and Configuration Guide
 
-Open a terminal in the project root directory:
+Follow the steps below to set up your environment and install the required packages before running the application.
+
+### 1. Navigate to the Project Directory
+
+Open a terminal or command prompt and change your working directory to the project root:
 
 ```bash
 cd predictive-maintenance
 ```
 
-### 2. Create a virtual environment
+### 2. Create a Virtual Environment
 
-Windows:
+It is highly recommended to use a virtual environment to prevent package version conflicts.
+
+For Windows:
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-macOS or Linux:
+For macOS or Linux:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
+
+Install all the required Python packages specified in `requirements.txt` using the pip package manager:
 
 ```bash
 pip install -r requirements.txt
@@ -87,134 +100,156 @@ pip install -r requirements.txt
 
 ## Running the Application
 
-Run the Streamlit app from the project root:
+Once the installation is complete, start the Streamlit server from the root of the project:
 
 ```bash
 streamlit run app.py
 ```
 
-After the command runs, Streamlit will show a local URL, usually:
+Streamlit will boot up the application and display local URL addresses in the terminal:
 
 ```text
 http://localhost:8501
 ```
 
-Open the URL in a browser to use the application.
+Open this URL in a web browser to access the interactive dashboard.
 
-## How to Use the Application
+## Detailed User Guide
 
-The application has one main page with two main areas:
+The application interface is structured from top to bottom: App Header, Machine Data Input, Prediction Result, Explanation Panel, and System Information.
 
-- Machine Data Input
-- Prediction Result
+The application offers two primary modes for inputting machine operating data. You can switch between them using the selector control in the "Machine Data Input" section.
 
-### Manual Input
+### 1. Manual Input Mode
 
-Use this mode when you want to predict one machine record.
+Use this mode when you want to analyze the risk score and failure status of a single machine in real-time.
 
-1. Select `Manual Input`.
-2. Enter the machine operating values.
-3. Optionally enter machine identity information such as Machine ID.
-4. Click `Run Prediction`.
-5. Review the risk score, threshold, status, decision margin, recommendation, and explanation panel.
+![Manual Input and Prediction Dashboard](public/manual_input.png)
 
-### CSV Upload
+How to use:
+1. Select the **Manual Input** option.
+2. Enter a unique identifier in the **Machine ID** text box (default: MCH-001). This field is optional and is used to label the results.
+3. Use the numeric input boxes to enter the current operating values for the machine:
+   - **Air temperature [K]**
+   - **Process temperature [K]**
+   - **Rotational speed [rpm]**
+   - **Torque [Nm]**
+   - **Tool wear [min]**
+4. If any entered value falls outside the normal ranges found in the training dataset, a warnings box will appear. These warnings are informative and advise you that the model is predicting outside its typical data domain.
+5. Click the **Run Prediction** button.
+6. The system will evaluate the parameters, refresh the "Prediction Result" cards, and generate explanation summaries.
 
-Use this mode when you want to predict multiple machine records.
+### 2. CSV Upload Mode
 
-1. Select `CSV / Simulation`.
-2. Choose `Upload CSV` as the data source.
-3. Download the CSV template if needed.
-4. Upload a CSV file with the required columns.
-5. Review the preview and validation messages.
-6. Choose how missing values should be handled.
-7. Click the batch prediction button.
-8. Review the result table and download the prediction results if needed.
+Use this mode to analyze multiple machine records simultaneously using a formatted CSV file.
 
-Required CSV columns:
+How to use:
+1. Select the **CSV / Simulation** option.
+2. Set the **Data source** dropdown to **Upload CSV**.
+3. If you do not have a CSV file ready, click the **Download CSV Template** button to get a pre-formatted file named `machine_prediction_template.csv` with correct column headers.
+4. Prepare your file. The following columns must be present with identical spelling:
+   - `Air temperature [K]`
+   - `Process temperature [K]`
+   - `Rotational speed [rpm]`
+   - `Torque [Nm]`
+   - `Tool wear [min]`
+   Other columns like `Machine ID`, `Timestamp`, `Location`, and `Operator` are optional metadata columns.
+5. Select a missing data strategy from the **Missing value handling** dropdown:
+   - **Drop rows with missing values**: Excludes any row containing empty cells in the required feature columns.
 
-```text
-Air temperature [K]
-Process temperature [K]
-Rotational speed [rpm]
-Torque [Nm]
-Tool wear [min]
-```
+     ![Missing Value Handling: Drop Rows with Missing Values](public/csv_input_handle-1.png)
 
-Optional CSV columns:
+   - **Fill missing values with median**: Fills empty cells in the required feature columns with the median values of the original training dataset.
 
-```text
-Machine ID
-Timestamp
-Location
-Operator
-```
+     ![Missing Value Handling: Fill Missing Values with Median](public/csv_input_handle-2.png)
 
-### Generate Simulation Data
+6. Drag and drop or upload your CSV file into the file uploader.
+7. A preview of the first 10 rows will be displayed along with validation feedback. Any row containing non-numeric values in required fields will be marked with error flags.
+8. Click **Run Batch Prediction**.
+9. The batch results will display summary cards, status counts, risk distributions, a comprehensive output table, and a download button to export the results.
 
-Use this mode when you want to test the application with realistic demo data.
+   ![CSV / Simulation Batch Prediction Results](public/csv_results.png)
 
-1. Select `CSV / Simulation`.
-2. Choose `Generate Simulation` as the data source.
-3. Set the number of records.
-4. Select a simulation scenario.
-5. Generate the simulation data.
-6. Download the generated data if needed.
-7. Run prediction on the generated records.
+### 3. Generate Simulation Mode
 
-Simulation scenarios are based on statistics from `dataset/ai4i2020.csv`, including min, max, mean, standard deviation, median, and quantiles.
+This mode allows you to generate realistic machine records based on the original dataset statistics to test the application's functionality.
 
-## Prediction Output
+How to use:
+1. Select the **CSV / Simulation** option.
+2. Set the **Data source** dropdown to **Generate Simulation**.
+3. Input the number of rows to create in the **Number of records** field (ranges from 1 to 500).
+4. Select one of the simulation scenarios from the **Simulation scenario** dropdown:
+   - **Normal Operation**: Generates data within standard limits where the machine operates normally (features sampled around the dataset medians).
+   - **High Tool Wear**: Generates data where the tool wear parameter is near or above the 75th percentile (potential failure due to tool degradation).
+   - **High Torque**: Generates data where the load torque is near or above the 75th percentile (potential mechanical stress failure).
+   - **Low Speed High Torque**: Generates data combining low rotational speeds with high torque (extreme operating conditions).
+   - **Mixed Condition**: Generates a random mix of all the above scenarios to simulate a varied production line.
+5. Click **Generate Simulation Data**. The system will create simulated records with random statistical noise (jitter) to ensure realistic variation while keeping features within dataset bounds.
+6. You can download this simulated dataset by clicking the **Download Generated Simulation Data** button.
+7. Click **Run Batch Prediction** to process the simulated rows.
 
-Each prediction includes:
+## Analysis and Output Interpretation
 
-- `risk_score`: Model output after ANFIS inference and sigmoid transformation.
-- `threshold`: Decision threshold loaded from the model artifact.
-- `prediction`: Numeric model decision.
-- `status`: `Normal` or `Failure Risk`.
-- `decision_margin`: Absolute distance between risk score and threshold.
-- `recommendation`: User-oriented maintenance recommendation.
+Once the prediction is completed, the results are visualized. Here is how to interpret the model outputs:
 
-Classification logic:
+### 1. Prediction Metrics (Metric Cards)
+- **Risk Score**: A value between 0.0000 (very safe) and 1.0000 (highest risk of failure), indicating the probability of machine failure. This is computed by applying a sigmoid function on the ANFIS linear consequent outputs.
+- **Threshold**: The decision boundary of the model. If the Risk Score is equal to or greater than the Threshold, the machine is classified as at risk. This boundary is loaded dynamically from the model artifact (default value is approximately 0.4900).
+- **Status**: The final classification. A status of **Failure Risk** is displayed in red, and a status of **Normal** is displayed in green.
+- **Decision Margin**: The absolute difference between the Risk Score and the Threshold. A small decision margin indicates that the machine is operating close to the classification boundary.
 
-```text
-If risk_score >= threshold: Failure Risk
-If risk_score < threshold: Normal
-```
+### 2. Maintenance Recommendation
+A colored box displays the recommended action:
+- **Normal Status**: Advises continuing routine monitoring according to standard procedure.
+- **Failure Risk Status**: Provides a warning and lists the top two parameters contributing most to the risk score, helping technicians prioritize inspection areas.
 
-No additional manual threshold or extra status category is used by the application.
+### 3. Decision Explanation Panel
 
-## Model Artifacts
+You can expand the "Why did this result appear?" section to understand the model's reasoning. For batch predictions, you can use the dropdown to select which row to explain.
 
-The application uses these files:
+![Model Prediction Explanation Overview](public/explanation_detail.png)
 
-- `models/scaler.pkl`
-- `models/feature_columns.pkl`
-- `models/anfis_with_ga_params.pkl`
-- `models/anfis_without_ga_params.pkl`
+The explanation includes:
+- **Prediction Narrative**: A natural language description of the classification result and the main operating parameters that caused it.
+- **Original vs. Scaled Input and Fuzzy Membership**: Side-by-side tables showing raw values, scaled equivalents (normalized using a Z-score scaler), and the fuzzy membership degree table.
 
-The main model is `anfis_with_ga_params.pkl`. The threshold is read directly from the model file.
+  ![Original Input, Scaled Input, and Fuzzy Membership Tables](public/record_detail.png)
 
-## Notes and Limitations
+- **Fuzzy Membership Degrees**: A grouped bar chart showing the degree (between 0.0 and 1.0) to which each parameter belongs to the Low, Medium, and High fuzzy sets.
 
-- This system is a decision-support tool, not a final maintenance decision maker.
-- Maintenance decisions must be validated by a technician or operator.
-- Operational machine data can be sensitive when it comes from a real industrial site.
-- The application does not permanently store uploaded, simulated, or predicted data.
-- The application is designed for inference and visualization only, not model training.
+  ![Fuzzy Membership Degree Chart](public/fuzzy_membership.png)
+
+- **Feature Contributions**: A table and a horizontal bar chart showing the linear contribution of each feature to the model output. Positive contributions increase the failure risk score, while negative contributions decrease it.
+
+  ![Feature Contribution Chart](public/feature_contribution.png)
+
+### 4. Batch Prediction Graphs (Batch Mode Only)
+- **Prediction Status Count**: A bar chart displaying the count of machines classified as Normal versus those at Failure Risk.
+- **Risk Score Distribution**: A histogram showing the distribution of risk scores across all processed rows to help visualize the overall health of the machine fleet.
+
+## Technical Details
+
+The prediction system is powered by:
+- **Core Model**: Adaptive Neuro-Fuzzy Inference System (ANFIS). It combines the transparent rule-based reasoning of fuzzy logic with the learning capabilities of artificial neural networks.
+- **Genetic Algorithm Optimization**: The parameters of the Gaussian membership functions (center and sigma) and the decision threshold were optimized during training using a Genetic Algorithm to maximize accuracy and F1-score.
+- **Dynamic Thresholding**: The decision threshold is read dynamically from the model file (`anfis_with_ga_params.pkl`), ensuring complete consistency with the original research.
+
+## System Limits and Data Privacy
+
+Keep in mind the following operational aspects:
+1. **Decision Support Only**: This system is a decision-support tool. It should not be the sole basis for maintenance actions. All maintenance decisions must be reviewed and validated by a qualified technician or operator.
+2. **Data Privacy**: Operational parameters can contain sensitive business information (such as line layouts or performance profiles). The application runs locally or on your isolated server. Uploaded CSVs, generated simulation data, and prediction results are kept in memory and are not stored permanently.
+3. **Inference Only**: The application is configured exclusively for model inference and explanation. It does not contain features to train or retrain the model.
 
 ## Troubleshooting
 
-If the app fails to start, check that:
+### Application fails to start or crashes
+1. Verify that you are executing `streamlit run app.py` from the root directory of the project, not from inside the `utils` or `models` directories.
+2. Ensure that the required model artifacts (`anfis_with_ga_params.pkl`, `scaler.pkl`, and `feature_columns.pkl`) are in the `models/` folder.
+3. Confirm that the reference dataset (`dataset/ai4i2020.csv`) is present.
+4. Ensure your virtual environment is active and all required libraries are installed by running `pip install -r requirements.txt`.
 
-- All files in `models/` are available.
-- `dataset/ai4i2020.csv` exists.
-- Dependencies were installed with `pip install -r requirements.txt`.
-- The app is run from the project root using `streamlit run app.py`.
-
-If a CSV upload fails, check that:
-
-- Required columns are present.
-- Feature columns contain numeric values.
-- Missing values are handled using the provided option.
-- Column names match the template exactly.
+### CSV Upload fails or results in row errors
+1. Open the CSV file in a text editor to verify that the required column names are spelled exactly as required (e.g., `Air temperature [K]` is case-sensitive and must include the brackets).
+2. Check that the cells in the feature columns contain only numbers (no letters, trailing characters, or special symbols).
+3. If your CSV file has missing data, choose the "Fill missing values with median" option to prevent rows from being dropped during validation.
