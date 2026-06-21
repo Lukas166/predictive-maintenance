@@ -4,6 +4,25 @@ Early industrial machine failure prediction system using an Adaptive Neuro-Fuzzy
 
 This application is non-invasive, meaning it does not retrain the model and does not modify the original dataset, Jupyter notebook, scaler object, or model parameter files.
 
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Project Structure](#project-structure)
+- [Installation and Configuration Guide](#installation-and-configuration-guide)
+- [Running the Application](#running-the-application)
+- [Detailed User Guide](#detailed-user-guide)
+  - [Manual Input Mode](#1-manual-input-mode)
+  - [CSV Upload Mode](#2-csv-upload-mode)
+  - [Generate Simulation Mode](#3-generate-simulation-mode)
+- [Analysis and Output Interpretation](#analysis-and-output-interpretation)
+  - [Prediction Metrics (Metric Cards)](#1-prediction-metrics-metric-cards)
+  - [Maintenance Recommendation](#2-maintenance-recommendation)
+  - [Decision Explanation Panel](#3-decision-explanation-panel)
+  - [Batch Prediction Graphs (Batch Mode Only)](#4-batch-prediction-graphs-batch-mode-only)
+- [Technical Details](#technical-details)
+- [System Limits and Data Privacy](#system-limits-and-data-privacy)
+- [Troubleshooting](#troubleshooting)
+
 ## Project Overview
 
 This project predicts whether an industrial machine is in a normal operating condition or at failure risk based on five main operating parameters:
